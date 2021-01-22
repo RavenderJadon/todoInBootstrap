@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+.appBody {
+  height: 100vh;
+  width: 100vw;
+  background: #fff;
+  margin: 0;
+  display: block;
+  overflow: hidden;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.menuBar {
+  background: #2831a6;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100%;
+}
+.menuBarText {
   color: white;
+  padding: 50%;
+  margin: 40%;
 }
 
-.App-link {
-  color: #61dafb;
+.categoryNavBody {
+  background: #f8f7fc;
+  height: 100vh;
+  overflow: scroll;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hoverCategory:hover {
+  color: #2831a6;
+}
+
+.khatkar {
+  padding: 20% 10% 5% 20%;
+  margin-top: -10%;
+}
+
+.itemsInAllTodosComponent {
+  height: 100vh;
+  overflow: scroll;
+  text-align: justify;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12% 13% 0 9%;
+}
+.plus-btn {
+  border-radius: 50px !important;
+  font-size: xx-large !important;
+  width: 30%;
+  padding: auto !important;
+}
+.addSubCatBtn {
+  border-radius: 50px !important;
+}
+
+.searchBar {
+  width: 90% !important;
+  border-radius: 50px !important;
+}
+
+.searchBtn {
+  border-radius: 50px !important;
+  width: 20% !important;
+}
+
+.subCatHeading {
+  margin: 30px;
+}
+
+.taskBtn {
+  border-radius: 50px !important;
+}
+
+.taskItemDiv {
+  margin: 30px 10px 5px 20px;
+}
+
+.taskItemDiv:hover {
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2),
+    0 12px 40px 0 rgba(0, 0, 0, 0.19);
+}
+.test {
+  /* display: flex; */
+  background: rgb(179, 150, 150);
 }
