@@ -38,6 +38,14 @@
   text-align: justify;
 }
 
+.itemsInAllTodosComponentUpComing {
+  height: 70vh;
+  overflow: scroll;
+  text-align: justify;
+  /* background: red; */
+  margin-bottom: 900px;
+}
+
 .buttonDiv {
   display: flex;
   justify-content: flex-end;
