@@ -1,15 +1,17 @@
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Collapse } from "react-bootstrap";
 import Amit from "../components/Amit";
 import CategoryModal from "../components/modal/categoryModal";
 import SubCategoryModal from "../components/modal/subCategoryModal";
+import { BsChevronDown } from "react-icons/bs";
 
 const CategoryNavBar = () => {
   const [todoState, setTodoState] = useContext(DataContext);
   const [modalShow, setModalShow] = useState(false);
   const [modalsubShow, setModalsubShow] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [open, setOpen] = useState(0);
 
   const [inputCatState, setInputCatState] = useState({
     category_name: "",
@@ -21,6 +23,10 @@ const CategoryNavBar = () => {
     sub_category_id: todoState.sub_category.length,
     sub_category_name: "",
   });
+
+  const toggleCollapsable = (index) => {
+    setOpen(open === index ? -1 : index);
+  };
 
   const setModalAndIndex = (catId) => {
     setModalsubShow(true);
@@ -99,6 +105,18 @@ const CategoryNavBar = () => {
                     >
                       +
                     </Button>
+                    <Button
+                      onClick={() => toggleCollapsable(categoryIndex)}
+                      aria-controls="example-collapse-text"
+                      aria-expanded={open}
+                      variant="light"
+                      size="sm"
+                      className="testTest"
+                    >
+                      {/* button to show sub category */}
+                      <BsChevronDown />
+                    </Button>
+
                     <SubCategoryModal
                       show={modalsubShow}
                       onHideSub={onHideSub}
@@ -110,15 +128,23 @@ const CategoryNavBar = () => {
                 </Row>
               </div>
 
-              {todoState.sub_category
-                .filter((it) => it.category_id == category.category_id)
-                .map((subCatName) => {
-                  return (
-                    <div key={subCatName.sub_category_id }>
-                      <p>{subCatName.sub_category_name}</p>
-                    </div>
-                  );
-                })}
+              <>
+                <Collapse in={open === categoryIndex}>
+                  <div id="example-collapse-text">
+                    {todoState.sub_category
+                      .filter((it) => it.category_id == category.category_id)
+                      .map((subCatName) => {
+                        return (
+                          <div>
+                            <div key={subCatName.sub_category_id}>
+                              <p>{subCatName.sub_category_name}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </Collapse>
+              </>
             </div>
           </div>
         );
