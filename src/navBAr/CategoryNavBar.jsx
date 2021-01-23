@@ -11,7 +11,7 @@ const CategoryNavBar = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalsubShow, setModalsubShow] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(-1);
 
   const [inputCatState, setInputCatState] = useState({
     category_name: "",
