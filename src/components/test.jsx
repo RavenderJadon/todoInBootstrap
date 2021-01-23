@@ -34,7 +34,7 @@ const Test = () => {
   };
 
   return (
-    <div>
+    <div className="itemsInAllTodosComponent">
       <CardGroup>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="todoITems">

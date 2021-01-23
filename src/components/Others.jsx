@@ -23,39 +23,51 @@ const Others = () => {
 
   console.log("todoStateInUpComing", todoStateInUpComing);
   return (
-    <div>
+    <div className="itemsInAllTodosComponent">
       <CardGroup>
-        {todoStateInUpComing.task.map((todoListItem, todoListItemIndex) => {
-          return (
-            <div key={todoListItem.id}>
-              {todoListItem.whatsTheStatus === "deleted" && (
-                <div>
-                  <div className="taskItemDiv">
-                    <Card border="dark" style={{ width: "18rem" }}>
-                      <Card.Body>
-                        <Card.Title>{todoListItem.whatsTheStatus}</Card.Title>
-                        <Card.Text>{todoListItem.title}</Card.Text>
-                        <Card.Text>
-                          {todoListItem.settingForDate} {}{" "}
-                          {todoListItem.setting_for_what_time}
-                        </Card.Text>
-                        <Button
-                          variant="outline-danger"
-                          className="taskBtn"
-                          onClick={() =>
-                            changeWhatsTheStatus(todoListItemIndex)
-                          }
-                        >
-                          Remove
-                        </Button>
-                      </Card.Body>
-                    </Card>
+        {todoStateInUpComing.task
+          .filter((todoListItem) => {
+            if (todoStateInUpComing.search == "") {
+              return todoListItem;
+            } else if (
+              todoListItem.title
+                .toLowerCase()
+                .includes(todoStateInUpComing.search.toLowerCase())
+            ) {
+              return todoListItem;
+            }
+          })
+          .map((todoListItem, todoListItemIndex) => {
+            return (
+              <div key={todoListItem.id}>
+                {todoListItem.whatsTheStatus === "deleted" && (
+                  <div>
+                    <div className="taskItemDiv">
+                      <Card border="dark" style={{ width: "18rem" }}>
+                        <Card.Body>
+                          <Card.Title>{todoListItem.whatsTheStatus}</Card.Title>
+                          <Card.Text>{todoListItem.title}</Card.Text>
+                          <Card.Text>
+                            {todoListItem.settingForDate} {}{" "}
+                            {todoListItem.setting_for_what_time}
+                          </Card.Text>
+                          <Button
+                            variant="outline-danger"
+                            className="taskBtn"
+                            onClick={() =>
+                              changeWhatsTheStatus(todoListItemIndex)
+                            }
+                          >
+                            Remove
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                )}
+              </div>
+            );
+          })}
       </CardGroup>
     </div>
   );
