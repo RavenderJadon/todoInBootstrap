@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
-import { Button, Row, Col, Collapse } from "react-bootstrap";
+import { Button, Row, Col, Collapse, Modal } from "react-bootstrap";
 import Amit from "../components/Amit";
 import CategoryModal from "../components/modal/categoryModal";
 import SubCategoryModal from "../components/modal/subCategoryModal";
@@ -12,6 +12,12 @@ const CategoryNavBar = () => {
   const [modalsubShow, setModalsubShow] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [open, setOpen] = useState(-1);
+  const [modalInInnerCat, setModalInInnerCat] = useState(false);
+  const handleClose = () => {
+    setModalInInnerCat(false);
+    setModalShow(false);
+  };
+  const handleShow = () => setModalInInnerCat(true);
 
   const [inputCatState, setInputCatState] = useState({
     category_name: "",
@@ -34,20 +40,26 @@ const CategoryNavBar = () => {
   };
   console.log("indxCatState", selectedCategoryId);
   const onHide = () => {
-    const newCat = {
-      category_name: inputCatState.category_name,
-      category_id: todoState.category.length + 1,
-    };
+    if (inputCatState.category_name === "") {
+      console.log("hii empty", inputCatState.category_name);
+      setModalInInnerCat(true);
+      setModalShow(true);
+    } else {
+      const newCat = {
+        category_name: inputCatState.category_name,
+        category_id: todoState.category.length + 1,
+      };
 
-    setTodoState({
-      ...todoState,
-      category: [...todoState.category, newCat],
-    });
-    setInputCatState({
-      ...inputCatState,
-      category_name: "",
-    });
-    setModalShow(false);
+      setTodoState({
+        ...todoState,
+        category: [...todoState.category, newCat],
+      });
+      setInputCatState({
+        ...inputCatState,
+        category_name: "",
+      });
+      setModalShow(false);
+    }
   };
 
   const onHideSub = () => {
@@ -127,6 +139,26 @@ const CategoryNavBar = () => {
                   </Col>
                 </Row>
               </div>
+
+              <>
+                {" "}
+                <Modal
+                  show={modalInInnerCat}
+                  onHide={handleClose}
+                  backdrop="static"
+                  keyboard={false}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>you have to write some thing</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>you have to write some thing</Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
 
               <>
                 <Collapse in={open === categoryIndex}>
