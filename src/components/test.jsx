@@ -1,96 +1,93 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
-import { Card, Button, CardGroup } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Test = () => {
   const [todoStateInUpComing, setTodoStateInUpComing] = useContext(DataContext);
-  console.log("todoStateInUpComing", todoStateInUpComing);
-  const [todoArrState, setTodoArrState] = useState(todoStateInUpComing.task);
+  console.log(todoStateInUpComing);
 
-  const changeWhatsTheStatus = (todoListItemIndex) => {
-    const objComing = todoStateInUpComing.task[todoListItemIndex];
-    objComing.whatsTheStatus = "completed";
-    const taskArr = todoStateInUpComing.task;
-    console.log("taskArr", taskArr);
-    const firstArr = taskArr.slice(0, todoListItemIndex);
-    const indexUpgrade = todoListItemIndex + 1;
-    const secondArr = taskArr.slice(indexUpgrade);
-    const result = [...firstArr, objComing, ...secondArr];
-    setTodoStateInUpComing({
-      ...todoStateInUpComing,
-      task: result,
-    });
-  };
+  let upcoming = todoStateInUpComing.task.filter(
+    (tsk) => tsk.whatsTheStatus === "upcoming"
+  );
+  console.log("upcoming:", upcoming);
+  let completed = todoStateInUpComing.task.filter(
+    (tsk) => tsk.whatsTheStatus === "completed"
+  );
+  console.log("completed:", completed);
+  let deleted = todoStateInUpComing.task.filter(
+    (tsk) => tsk.whatsTheStatus === "deleted"
+  );
+  console.log("deleted:", deleted);
 
-  const handleOnDragEnd = (result) => {
-    console.log("result", result);
-    if (!result.destination) return;
-    const items = Array.from(todoArrState);
-    // const items = [...todoArrState];
-    const [recordedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, recordedItem);
-    setTodoArrState(items);
+  const dragEnd = (result) => {
+    console.log("result :", result);
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = source.droppableId;
+    console.log("start:",start)
+    const finish = destination.droppableId;
+    console.log("finish:",finish)
+    if(start===finish){
+      console.log("same")
+      
+    }else{
+      console.log("not same")
+    }
   };
 
   return (
-    <div className="itemsInAllTodosComponent">
-      <CardGroup>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="todoITems">
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
-                {todoArrState.map((todoListItem, todoListItemIndex) => {
-                  return (
-                    <Draggable
-                      key={todoListItem.id}
-                      draggableId={"" + todoListItem.id}
-                      index={todoListItemIndex}
-                    >
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                        >
-                          {todoListItem.whatsTheStatus === "upcoming" && (
-                            <div>
-                              <div className="taskItemDiv">
-                                <Card border="dark" style={{ width: "18rem" }}>
-                                  <Card.Body>
-                                    <Card.Title>
-                                      {todoListItem.whatsTheStatus}
-                                    </Card.Title>
-                                    <Card.Text>{todoListItem.title}</Card.Text>
-                                    <Card.Text>
-                                      {todoListItem.settingForDate} {}{" "}
-                                      {todoListItem.setting_for_what_time}
-                                    </Card.Text>
-                                    <Button
-                                      variant="outline-danger"
-                                      className="taskBtn"
-                                      onClick={() =>
-                                        changeWhatsTheStatus(todoListItemIndex)
-                                      }
-                                    >
-                                      Mark as Complete
-                                    </Button>
-                                  </Card.Body>
-                                </Card>
+    <div className="itemsInAllTodosComponentUpComing">
+      <DragDropContext onDragEnd={dragEnd}>
+        <div className="columsDiv">
+          {todoStateInUpComing.typeOfStatus.map((status, index) => {
+            return (
+              <div className="coloumnDiv" key={status}>
+                <div className="coloumnDivHeading">
+                  <h4>{status}</h4>
+                </div>
+                <Droppable droppableId={status}>
+                  {(provided) => (
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      {todoStateInUpComing.task
+                        .filter((tsk) => tsk.whatsTheStatus === status)
+                        .map((itms, i) => (
+                          <Draggable
+                            draggableId={itms.id.toString()}
+                            key={itms.id}
+                            index={i}
+                          >
+                            {(provided) => (
+                              <div
+                                key={itms.id}
+                                className="coloumnDivListItms"
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
+                              >
+                                <p>{itms.title}</p>
                               </div>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
+                            )}
+                          </Draggable>
+                        ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
               </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </CardGroup>
+            );
+          })}
+        </div>
+      </DragDropContext>
     </div>
   );
 };
