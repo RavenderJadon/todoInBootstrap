@@ -38,7 +38,7 @@ const AllTodos = () => {
   };
 
   return (
-    <div className="itemsInAllTodosComponent">
+    <div className="itemsInAllTodosComponentUpComing">
       <CardGroup>
         {todoState.task
           .filter((items) => {
