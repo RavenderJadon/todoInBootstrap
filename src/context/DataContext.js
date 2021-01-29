@@ -67,7 +67,8 @@ export const DataProvider = (props) => {
         category_name: "Project",
         sub_category_name: "Client Calls",
       },
-      {category_id: 3,
+      {
+        category_id: 3,
         sub_category_id: 9,
         category_name: "Project",
         sub_category_name: "second Client Calls",
@@ -221,7 +222,8 @@ export const DataProvider = (props) => {
         whatsTheStatus: "upcoming",
       },
     ],
-    search:"",
+    search: "",
+    typeOfStatus: ["upcoming", "completed", "deleted"],
   });
   return (
     <DataContext.Provider value={[todoState, setTodoState]}>
