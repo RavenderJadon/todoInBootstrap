@@ -23,7 +23,7 @@ const Others = () => {
 
   console.log("todoStateInUpComing", todoStateInUpComing);
   return (
-    <div className="itemsInAllTodosComponent">
+    <div className="itemsInAllTodosComponentUpComing">
       <CardGroup>
         {todoStateInUpComing.task
           .filter((todoListItem) => {
