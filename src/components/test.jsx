@@ -46,45 +46,143 @@ const Test = () => {
     const indexOfDragableItemFromStarting = source.index;
     const indexOfDragableItemAtEnd = destination.index;
 
-    if (startDropableArea === "upcoming") {
-      const newArrayOfUpcomingTask = [...upcomingItems];
-      newArrayOfUpcomingTask.splice(indexOfDragableItemFromStarting, 1);
-      const itemWhichIsDeleted = upcomingItems[indexOfDragableItemFromStarting];
+    if (startDropableArea === finishDropableArea) {
+      if (startDropableArea === "upcoming") {
+        const newArrayOfUpcomingTask = [...upcomingItems];
+        newArrayOfUpcomingTask.splice(indexOfDragableItemFromStarting, 1);
+        const itemWhichIsDeleted =
+          upcomingItems[indexOfDragableItemFromStarting];
 
-      newArrayOfUpcomingTask.splice(
-        indexOfDragableItemAtEnd,
-        0,
-        itemWhichIsDeleted
-      );
-      setUpcomingItems(newArrayOfUpcomingTask);
-    };
+        newArrayOfUpcomingTask.splice(
+          indexOfDragableItemAtEnd,
+          0,
+          itemWhichIsDeleted
+        );
+        setUpcomingItems(newArrayOfUpcomingTask);
+      }
 
-    if (startDropableArea === "completed") {
-      const newArrayOfUpcomingTask = [...completedItems];
-      newArrayOfUpcomingTask.splice(indexOfDragableItemFromStarting, 1);
-      const itemWhichIsDeleted =
-        completedItems[indexOfDragableItemFromStarting];
+      if (startDropableArea === "completed") {
+        const newArrayOfUpcomingTask = [...completedItems];
+        newArrayOfUpcomingTask.splice(indexOfDragableItemFromStarting, 1);
+        const itemWhichIsDeleted =
+          completedItems[indexOfDragableItemFromStarting];
 
-      newArrayOfUpcomingTask.splice(
-        indexOfDragableItemAtEnd,
-        0,
-        itemWhichIsDeleted
-      );
-      setCompletedItems(newArrayOfUpcomingTask);
-    };
+        newArrayOfUpcomingTask.splice(
+          indexOfDragableItemAtEnd,
+          0,
+          itemWhichIsDeleted
+        );
+        setCompletedItems(newArrayOfUpcomingTask);
+      }
 
-    if (startDropableArea === "deleted") {
-      const newArrayOfUpcomingTask = [...deletedItems];
-      newArrayOfUpcomingTask.splice(indexOfDragableItemFromStarting, 1);
-      const itemWhichIsDeleted = deletedItems[indexOfDragableItemFromStarting];
+      if (startDropableArea === "deleted") {
+        const newArrayOfUpcomingTask = [...deletedItems];
+        newArrayOfUpcomingTask.splice(indexOfDragableItemFromStarting, 1);
+        const itemWhichIsDeleted =
+          deletedItems[indexOfDragableItemFromStarting];
 
-      newArrayOfUpcomingTask.splice(
-        indexOfDragableItemAtEnd,
-        0,
-        itemWhichIsDeleted
-      );
-      setDeletedItems(newArrayOfUpcomingTask);
-    };
+        newArrayOfUpcomingTask.splice(
+          indexOfDragableItemAtEnd,
+          0,
+          itemWhichIsDeleted
+        );
+        setDeletedItems(newArrayOfUpcomingTask);
+      }
+    }
+    if (startDropableArea !== finishDropableArea) {
+      if (finishDropableArea === "deleted") {
+        if (startDropableArea === "upcoming") {
+          const newArrayOfUpcomingTask = [...upcomingItems];
+          const arrDeleted = [...deletedItems];
+          const [itemFirstDelete] = newArrayOfUpcomingTask.splice(
+            indexOfDragableItemFromStarting,
+            1
+          );
+          itemFirstDelete.whatsTheStatus = "deleted";
+          console.log("itemFirstDelete", itemFirstDelete);
+          const $newArrayOfUpcomingTask = newArrayOfUpcomingTask;
+          setUpcomingItems($newArrayOfUpcomingTask);
+          const $arrDeleted = [...arrDeleted, itemFirstDelete];
+          setDeletedItems($arrDeleted);
+        }
+        if (startDropableArea === "completed") {
+          const newArrayOfUpcomingTask = [...completedItems];
+          const arrDeleted = [...deletedItems];
+          const [itemFirstDelete] = newArrayOfUpcomingTask.splice(
+            indexOfDragableItemFromStarting,
+            1
+          );
+          itemFirstDelete.whatsTheStatus = "deleted";
+          console.log("itemFirstDelete", itemFirstDelete);
+          const $newArrayOfUpcomingTask = newArrayOfUpcomingTask;
+          setCompletedItems($newArrayOfUpcomingTask);
+          const $arrDeleted = [...arrDeleted, itemFirstDelete];
+          setDeletedItems($arrDeleted);
+        }
+      }
+
+      if (finishDropableArea === "completed") {
+        if (startDropableArea === "upcoming") {
+          const newArrayOfUpcomingTask = [...upcomingItems];
+          const arrDeleted = [...completedItems];
+          const [itemFirstDelete] = newArrayOfUpcomingTask.splice(
+            indexOfDragableItemFromStarting,
+            1
+          );
+          itemFirstDelete.whatsTheStatus = "completed";
+          console.log("itemFirstDelete", itemFirstDelete);
+          const $newArrayOfUpcomingTask = newArrayOfUpcomingTask;
+          setUpcomingItems($newArrayOfUpcomingTask);
+          const $arrDeleted = [...arrDeleted, itemFirstDelete];
+          setCompletedItems($arrDeleted);
+        }
+        if (startDropableArea === "deleted") {
+          const newArrayOfUpcomingTask = [...deletedItems];
+          const arrDeleted = [...completedItems];
+          const [itemFirstDelete] = newArrayOfUpcomingTask.splice(
+            indexOfDragableItemFromStarting,
+            1
+          );
+          itemFirstDelete.whatsTheStatus = "completed";
+          console.log("itemFirstDelete", itemFirstDelete);
+          const $newArrayOfUpcomingTask = newArrayOfUpcomingTask;
+          setDeletedItems($newArrayOfUpcomingTask);
+          const $arrDeleted = [...arrDeleted, itemFirstDelete];
+          setCompletedItems($arrDeleted);
+        }
+      }
+
+      if (finishDropableArea === "upcoming") {
+        if (startDropableArea === "completed") {
+          const newArrayOfUpcomingTask = [...completedItems];
+          const arrDeleted = [...upcomingItems];
+          const [itemFirstDelete] = newArrayOfUpcomingTask.splice(
+            indexOfDragableItemFromStarting,
+            1
+          );
+          itemFirstDelete.whatsTheStatus = "upcoming";
+          console.log("itemFirstDelete", itemFirstDelete);
+          const $newArrayOfUpcomingTask = newArrayOfUpcomingTask;
+          setCompletedItems($newArrayOfUpcomingTask);
+          const $arrDeleted = [...arrDeleted, itemFirstDelete];
+          setUpcomingItems($arrDeleted);
+        }
+        if (startDropableArea === "deleted") {
+          const newArrayOfUpcomingTask = [...deletedItems];
+          const arrDeleted = [...upcomingItems];
+          const [itemFirstDelete] = newArrayOfUpcomingTask.splice(
+            indexOfDragableItemFromStarting,
+            1
+          );
+          itemFirstDelete.whatsTheStatus = "upcoming";
+          console.log("itemFirstDelete", itemFirstDelete);
+          const $newArrayOfUpcomingTask = newArrayOfUpcomingTask;
+          setDeletedItems($newArrayOfUpcomingTask);
+          const $arrDeleted = [...arrDeleted, itemFirstDelete];
+          setUpcomingItems($arrDeleted);
+        }
+      }
+    }
   };
 
   return (
@@ -99,7 +197,11 @@ const Test = () => {
                 </div>
                 <Droppable droppableId={status}>
                   {(provided) => (
-                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className="areaOfDrropable"
+                    >
                       {upcomingItems.map((itms, i) => (
                         <div>
                           {itms.whatsTheStatus === status && (

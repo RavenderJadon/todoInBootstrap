@@ -27,3 +27,18 @@ console.log(c);
 aCopy.splice(4,0,c);
 console.log(aCopy)
 
+let obj = {
+  key1:1,
+  key2:2
+}
+console.log(obj);
+let $obj = {...obj};
+console.log($obj)
+
+let q=[1,2,3,4,5,6];
+console.log(q);
+let $q = [...q]
+console.log($q);
+const [w] = $q.splice(2,1);
+console.log(w)
+console.log($q);
